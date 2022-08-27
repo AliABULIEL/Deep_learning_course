@@ -1,9 +1,6 @@
 import argparse
-import train
 import data_set
 import model
-import test
-import tfgsm_attack
 import torch
 import torch.nn as nn
 parser = argparse.ArgumentParser()
@@ -15,15 +12,7 @@ parser.add_argument("-d", "--DEEPFOOL", nargs='?',  help="run Deep fool adversia
 
 
 args = parser.parse_args()
-global train_loader
-global val_loader
-global test_loader
-global fashion_model
-global train
-global trained_model
-global test
-global tfgsm_attack
-global device
+
 trained_model= None
 train_loader, val_loader, test_loader = data_set.load_dataset()
 fashion_model = model.Fashion_MNIST_CNN()
@@ -33,11 +22,17 @@ if torch.cuda.is_available():
 fashion_model.to(device)
 
 if args.train:
+    import train
     trained_model = train.train_model(model=fashion_model, train_loader=train_loader, validation_loader=val_loader, epochs=12, learning_rate=0.001, optimizer=torch.optim.Adam(fashion_model.parameters(), lr=0.001), loss_function=nn.CrossEntropyLoss(), device=device)
 if args.test:
+    import test
     test.test_model(model=trained_model, test_loader=test_loader, epochs=1, loss_function=nn.CrossEntropyLoss(), device=device)
 if args.TFGSM:
+    import tfgsm_attack
     X, Y = next(iter(test_loader))
     attack = tfgsm_attack.FGSMAttack(trained_model,[0.5],test_loader,device,Y.to(device))
     attack.run()
+# if args.deepfool:
+#     hh
+
 
