@@ -42,5 +42,5 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     print("train accuracy : {}".format(train_acc))
     print("Validation accuracy : {}".format(val_acc))
 
-    return model, iterations, train_accuracy, validate_accuracy
+    return model
 
