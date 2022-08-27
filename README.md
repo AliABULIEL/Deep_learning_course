@@ -12,5 +12,8 @@ to run the peoject:
           1) Enter at the shell % run main.py -t -e -f
                 -t menas train the model
                 -e means test the model on the test set
-                -f means try TFGSM attack on the trained model 
-                * you have to train the model before test and TFGSM attack*
+                -f means try TFGSM attack on the trained model \
+                -d means try deep fool atttack 
+                -h shows hints for flags 
+                
+                you have to train the model before test and TFGSM attack*
