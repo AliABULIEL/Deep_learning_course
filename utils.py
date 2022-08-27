@@ -4,7 +4,7 @@ def calculate_acc(dataset_loader, model, batch_size, device ):
     n_correct = 0
     n_total = 0
     for j, (data, label) in enumerate(dataset_loader):
-        data, label = data.to(main.device), label.to(main.device)
+        data, label = data.to(device), label.to(device)
         # flatten the image to vector of size 28*28
         data = Variable(data.view(batch_size, 1, 28, 28))
         # calculate output
