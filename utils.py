@@ -1,7 +1,6 @@
-import main
 from torch.autograd import Variable
 import torch
-def calculate_acc(dataset_loader, model, batch_size):
+def calculate_acc(dataset_loader, model, batch_size, device ):
     n_correct = 0
     n_total = 0
     for j, (data, label) in enumerate(dataset_loader):

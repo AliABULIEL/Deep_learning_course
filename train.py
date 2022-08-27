@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import logging
 from torch.autograd import Variable
-from utils import calculate_acc
+import utils
 logging.basicConfig(filename='train_log.log', encoding='utf-8')
 
 
@@ -34,8 +34,8 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
 
         print("epoch {} | train loss : {} ".format(i, error.detach()))
         logging.info("epoch {} | train loss : {} ".format(i, error.detach()))
-        train_acc = calculate_acc(train_loader, model, 100)
-        val_acc = calculate_acc(validation_loader, model, 100)
+        train_acc = utils.calculate_acc(train_loader, model, 100,device)
+        val_acc = utils.calculate_acc(validation_loader, model, 100,device)
         train_accuracy.append(train_acc)
         validate_accuracy.append(val_acc)
 
