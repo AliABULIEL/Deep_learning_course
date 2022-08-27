@@ -11,6 +11,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-t", "--train", nargs='?', help="train NN for FashionMinst dataset", const=True)
 parser.add_argument("-e", "--test", nargs='?', help="test NN for FashionMinst dataset", const=True)
 parser.add_argument("-f", "--TFGSM", nargs='?',  help="run TFGSM adversial attack", const=True)
+parser.add_argument("-d", "--DEEPFOOL", nargs='?',  help="run Deep fool adversial attack", const=True)
+
 
 args = parser.parse_args()
 global train_loader
