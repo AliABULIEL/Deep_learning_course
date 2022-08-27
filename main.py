@@ -7,7 +7,6 @@ import tfgsm_attack
 import torch
 import torch.nn as nn
 import matplotlib.pyplot as plt
-import plotly.graph_objects as go
 
 
 
@@ -39,13 +38,7 @@ if(args.train):
     iterations = []
     train_accuracy = []
     validate_accuracy = []
-    trained_model= train.train_model(model=fashion_model,train_loader=train_loader,validation_loader=val_loader, epochs=2, learning_rate=0.001, optimizer=torch.optim.Adam(fashion_model.parameters(), lr=0.001), loss_function=nn.CrossEntropyLoss(),device=device,train_accuracy=train_accuracy,iterations=iterations,validate_accuracy=validate_accuracy)
-    for i in train_accuracy:
-        print(i)
-    for j in iterations:
-        print(j)
-    fig = go.Figure(go.Scatter(iterations, train_accuracy))
-    fig.show()
+    trained_model= train.train_model(model=fashion_model, train_loader=train_loader, validation_loader=val_loader, epochs=2, learning_rate=0.001, optimizer=torch.optim.Adam(fashion_model.parameters(), lr=0.001), loss_function=nn.CrossEntropyLoss(), device=device, train_accuracy=train_accuracy, iterations=iterations, validate_accuracy=validate_accuracy)
 
     plt.plot(iterations, train_accuracy)
     plt.xlabel("No. of Iteration")
