@@ -53,6 +53,6 @@ if(args.test):
     test.test_model(model=trained_model,test_loader=test_loader,epochs=1,loss_function=nn.CrossEntropyLoss(),device=device)
 if(args.TFGSM):
     X, Y = next(iter(test_loader))
-    tfgsm_attack.FGSMAttack(trained_model,[0.5],test_loader,device,Y.to(device))
-    tfgsm_attack.run()
+    attack = tfgsm_attack.FGSMAttack(trained_model,[0.5],test_loader,device,Y.to(device))
+    attack.run()
 
