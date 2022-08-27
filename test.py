@@ -1,7 +1,7 @@
 import torch
 from torch.autograd import Variable
 import logging
-from utils import calculate_acc
+import utils
 logging.basicConfig(filename='test.log', encoding='utf-8')
 
 
@@ -29,7 +29,7 @@ def test_model(model, test_loader, epochs, loss_function,device):
                 losses.append(error.detach())
             print("epoch {} | test loss : {} ".format(i, error.detach()))
             logging.info("epoch {} | test loss : {} ".format(i, error.detach()))
-            test_acc = calculate_acc(test_loader, model, 1)
+            test_acc = utils.calculate_acc(test_loader, model, 1,device)
             test_accuracy.append(test_acc)
 
         print("test accuracy : {}".format(test_acc))
