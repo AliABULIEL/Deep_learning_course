@@ -4,17 +4,15 @@ import os
 
 
 
-def train_model(model, train_loader, validation_loader, epochs, learning_rate, optimizer, loss_function,device):
+def train_model(model, train_loader, validation_loader, epochs, learning_rate, optimizer, loss_function,device,train_accuracy,validate_accuracy,iterations):
     print(" Model is {}".format(model))
     # logging.info(model)
-    iteration = []
-    train_accuracy = []
-    validate_accuracy = []
+
     count = 0
     for i in range(epochs):
         losses = []
         count += 1
-        iteration.append(count)
+        iterations.append(count)
         for j, (data, label) in enumerate(train_loader):
             data, label = data.to(device), label.to(device)
             data = Variable(data.view(100, 1, 28, 28))
@@ -44,5 +42,5 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     print("train accuracy : {}".format(train_acc))
     print("Validation accuracy : {}".format(val_acc))
 
-    return model, iteration, train_accuracy, validate_accuracy
+    return model, iterations, train_accuracy, validate_accuracy
 
