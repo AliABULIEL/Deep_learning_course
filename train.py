@@ -17,6 +17,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     for i in range(epochs):
         count += 1
         iterations.append(count)
+        print("*******************************")
         for j, (data, label) in enumerate(train_loader):
             data, label = data.to(device), label.to(device)
             data = Variable(data.view(100, 1, 28, 28))
@@ -32,10 +33,6 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
             # backprop
             optimizer.step()
         print("epoch {} | train loss : {} ".format(i, error.detach()))
-        print(error.detach().device)
-        print(type(error))
-        print(error)
-        print(error.item())
         train_loss.append(error.detach().cpu().numpy())
         model.eval()
         with torch.no_grad():
@@ -50,7 +47,6 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
                 # backprop
 
         print("epoch {} | Validation loss : {} ".format(i, error.detach()))
-        print("*******************************")
         val_loss.append(error.detach().to("cpu").numpy())
         # logging.info("epoch {} | train loss : {} ".format(i, error.detach()))
         train_acc = utils.calculate_acc(train_loader, model, 100,device)
