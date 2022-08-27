@@ -3,6 +3,7 @@ import data_set
 import model
 import torch
 import torch.nn as nn
+
 parser = argparse.ArgumentParser()
 
 parser.add_argument("-t", "--train", nargs='?', help="train NN for FashionMinst dataset", const=True)
@@ -32,7 +33,9 @@ if args.TFGSM:
     X, Y = next(iter(test_loader))
     attack = tfgsm_attack.FGSMAttack(trained_model,[0.5],test_loader,device,Y.to(device))
     attack.run()
-# if args.deepfool:
-#     hh
+if args.deepfool:
+    import deep_fool
+    defence = deep_fool.DeepFoolAttack(model, test_loader,device)
+    defence.run()
 
 
