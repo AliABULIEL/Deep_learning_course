@@ -1,7 +1,7 @@
 import torch
 from torch import nn
-import logging
-logging.basicConfig(filename='TFGSM_Attack.log')
+# import logging
+# logging.basicConfig(filename='TFGSM_Attack.log')
 
 
 class FGSMAttack():
@@ -68,5 +68,5 @@ class FGSMAttack():
             success_rate = successful_attacks / float(len(self.test_dataloader))
             print("Epsilon: {}\tAttack Success Rate = {} / {} = {}".format(epsReal, successful_attacks,
                                                                            len(self.test_dataloader), success_rate))
-            logging.info("Epsilon: {}\tAttack Success Rate = {} / {} = {}".format(epsReal, successful_attacks,
-                                                                           len(self.test_dataloader), success_rate))
+            # logging.info("Epsilon: {}\tAttack Success Rate = {} / {} = {}".format(epsReal, successful_attacks,
+            #                                                                len(self.test_dataloader), success_rate))

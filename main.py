@@ -36,6 +36,8 @@ fashion_model.to(device)
 
 if(args.train):
     trained_model, iteration, train_accuracy, validate_accuracy = train.train_model(model=fashion_model,train_loader=train_loader,validation_loader=val_loader, epochs=12, learning_rate=0.001, optimizer=torch.optim.Adam(fashion_model.parameters(), lr=0.001), loss_function=nn.CrossEntropyLoss(),device=device)
+
+    plt.close('all')
     plt.plot(iteration, train_accuracy)
     plt.xlabel("No. of Iteration")
     plt.ylabel(" Train Accuracy")

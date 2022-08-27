@@ -1,17 +1,6 @@
 import torch
 from torch.autograd import Variable
 import utils
-import logging
-import logging.handlers
-import os
-
-handler = logging.handlers.WatchedFileHandler(
-    os.environ.get("LOGFILE", "test.log"))
-formatter = logging.Formatter(logging.BASIC_FORMAT)
-handler.setFormatter(formatter)
-root = logging.getLogger()
-root.setLevel(os.environ.get("LOGLEVEL", "INFO"))
-root.addHandler(handler)
 
 
 def test_model(model, test_loader, epochs, loss_function,device):
@@ -19,7 +8,7 @@ def test_model(model, test_loader, epochs, loss_function,device):
     model.eval()
     with torch.no_grad():
         print(" Model is {}".format(model))
-        logging.info(" Model is {}".format(model))
+        # logging.info(" Model is {}".format(model))
         iteration = []
         test_accuracy = []
         count = 0
@@ -37,9 +26,9 @@ def test_model(model, test_loader, epochs, loss_function,device):
                 # backprop
                 losses.append(error.detach())
             print("epoch {} | test loss : {} ".format(i, error.detach()))
-            logging.info("epoch {} | test loss : {} ".format(i, error.detach()))
+            # logging.info("epoch {} | test loss : {} ".format(i, error.detach()))
             test_acc = utils.calculate_acc(test_loader, model, 1,device)
             test_accuracy.append(test_acc)
 
         print("test accuracy : {}".format(test_acc))
-        logging.info("test accuracy : {}".format(test_acc))
+        # logging.info("test accuracy : {}".format(test_acc))
