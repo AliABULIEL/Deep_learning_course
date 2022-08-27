@@ -27,12 +27,16 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
             # calculate output
             y_hat = model(data)
             # calculate loss
-            error = loss_function(y_hat, label)
+            error = loss_function(y_hat, label,reduction='mean')
             error.backward()
             # backprop
             optimizer.step()
         print("epoch {} | train loss : {} ".format(i, error.detach()))
-        train_loss.append(error.detach().to("cpu").numpy())
+        print(error.detach().device)
+        print(type(error))
+        print(error)
+        print(error.item())
+        train_loss.append(error.detach().cpu().numpy())
         model.eval()
         with torch.no_grad():
             for j, (data, label) in enumerate(validation_loader):
