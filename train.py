@@ -4,7 +4,7 @@ import utils
 import matplotlib.pyplot as plt
 
 
-def train_model(model, train_loader, validation_loader, epochs, learning_rate, optimizer, loss_function,device):
+def train_model(model, train_loader, validation_loader, epochs, learning_rate, optimizer, loss_function, device):
     print(" Model is {}".format(model))
     # logging.info(model)
 
