@@ -6,7 +6,7 @@ from main import device
 logging.basicConfig(filename='train_log.log', encoding='utf-8')
 
 
-def train_model(model, train_loader, validation_loader, epochs, learning_rate, optimizer, loss_function):
+def train_model(model, train_loader, validation_loader, epochs, learning_rate, optimizer, loss_function,device):
     print(" Model is {}".format(model))
     logging.info(model)
     iteration = []

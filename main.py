@@ -33,9 +33,9 @@ if torch.cuda.is_available():
 fashion_model.to(device)
 
 if(args.train):
-    trained_model = train.train_model(model=fashion_model,train_loader=train_loader,validation_loader=val_loader, epochs=12, learning_rate=0.001, optimizer=torch.optim.Adam(fashion_model.parameters(), lr=0.001), loss_function=nn.CrossEntropyLoss(),device)
+    trained_model = train.train_model(model=fashion_model,train_loader=train_loader,validation_loader=val_loader, epochs=12, learning_rate=0.001, optimizer=torch.optim.Adam(fashion_model.parameters(), lr=0.001), loss_function=nn.CrossEntropyLoss(),device=device)
 if(args.test):
-    test.test_model(model=trained_model,test_loader=test_loader,epochs=1,loss_function=nn.CrossEntropyLoss(),device)
+    test.test_model(model=trained_model,test_loader=test_loader,epochs=1,loss_function=nn.CrossEntropyLoss(),device=device)
 if(args.TFGSM):
     X, Y = next(iter(test_loader))
     tfgsm_attack.FGSMAttack(trained_model,[0.5],test_loader,device,Y.to(device))

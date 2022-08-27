@@ -5,8 +5,6 @@ from torch.utils.data.sampler import SubsetRandomSampler
 import numpy as np
 
 
-
-
 def load_dataset():
     validation_split = 0.2
 

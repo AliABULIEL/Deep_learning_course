@@ -6,7 +6,7 @@ from utils import calculate_acc
 logging.basicConfig(filename='test.log', encoding='utf-8')
 
 
-def test_model(model, test_loader, epochs, loss_function):
+def test_model(model, test_loader, epochs, loss_function,device):
     # evaluate model:
     model.eval()
     with torch.no_grad():
