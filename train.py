@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import logging
 from torch.autograd import Variable
 import utils
-logging.basicConfig(filename='train_log.log', encoding='utf-8')
+logging.basicConfig(filename='train_log.log')
 
 
 def train_model(model, train_loader, validation_loader, epochs, learning_rate, optimizer, loss_function,device):
