@@ -44,8 +44,9 @@ if(args.train):
         print(i)
     for j in iterations:
         print(j)
-    fig = go.Figure(go.Scatter(x=iterations,y=train_accuracy))
+    fig = go.Figure(go.Scatter(iterations, train_accuracy))
     fig.show()
+
     plt.plot(iterations, train_accuracy)
     plt.xlabel("No. of Iteration")
     plt.ylabel(" Train Accuracy")
