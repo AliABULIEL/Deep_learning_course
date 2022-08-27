@@ -14,7 +14,7 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument("-t", "--train", nargs='?', help="train NN for FashionMinst dataset", const=True)
 parser.add_argument("-e", "--test", nargs='?', help="test NN for FashionMinst dataset", const=True)
-parser.add_argument("-f", "--TFGSM", nargs='?',  help="run TFGSM adversial attack", const=False)
+parser.add_argument("-f", "--TFGSM", nargs='?',  help="run TFGSM adversial attack", const=True)
 
 args = parser.parse_args()
 global train_loader
@@ -43,12 +43,14 @@ if(args.train):
     plt.ylabel(" Train Accuracy")
     plt.title("Iterations vs Accuracy")
     plt.show()
+    plt.savefig("training_accuracy.png")
 
     plt.plot(iteration, validate_accuracy)
     plt.xlabel("No. of Iteration")
     plt.ylabel(" Valdiation Accuracy")
     plt.title("Iterations vs Accuracy")
     plt.show()
+    plt.savefig("test_accuracy.png")
 if(args.test):
     test.test_model(model=trained_model,test_loader=test_loader,epochs=1,loss_function=nn.CrossEntropyLoss(),device=device)
 if(args.TFGSM):
