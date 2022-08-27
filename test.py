@@ -1,7 +1,6 @@
 import torch
 from torch.autograd import Variable
 import logging
-from main import device
 from utils import calculate_acc
 logging.basicConfig(filename='test.log', encoding='utf-8')
 
