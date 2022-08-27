@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import logging
 from torch.autograd import Variable
 from utils import calculate_acc
-from main import device
 logging.basicConfig(filename='train_log.log', encoding='utf-8')
 
 
