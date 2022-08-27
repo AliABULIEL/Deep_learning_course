@@ -38,7 +38,7 @@ if(args.train):
     iterations = []
     train_accuracy = []
     validate_accuracy = []
-    trained_model= train.train_model(model=fashion_model, train_loader=train_loader, validation_loader=val_loader, epochs=2, learning_rate=0.001, optimizer=torch.optim.Adam(fashion_model.parameters(), lr=0.001), loss_function=nn.CrossEntropyLoss(), device=device, train_accuracy=train_accuracy, iterations=iterations, validate_accuracy=validate_accuracy)
+    trained_model= train.train_model(model=fashion_model, train_loader=train_loader, validation_loader=val_loader, epochs=12, learning_rate=0.001, optimizer=torch.optim.Adam(fashion_model.parameters(), lr=0.001), loss_function=nn.CrossEntropyLoss(), device=device, train_accuracy=train_accuracy, iterations=iterations, validate_accuracy=validate_accuracy)
 
     plt.plot(iterations, train_accuracy)
     plt.xlabel("No. of Iteration")
