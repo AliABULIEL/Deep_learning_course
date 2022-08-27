@@ -2,7 +2,7 @@ import torch
 from torch.autograd import Variable
 import logging
 import utils
-logging.basicConfig(filename='test.log', encoding='utf-8')
+logging.basicConfig(filename='test.log')
 
 
 def test_model(model, test_loader, epochs, loss_function,device):
