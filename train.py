@@ -27,7 +27,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
             # calculate output
             y_hat = model(data)
             # calculate loss
-            error = loss_function(y_hat, label,reduction='mean')
+            error = loss_function(y_hat, label)
             error.backward()
             # backprop
             optimizer.step()
