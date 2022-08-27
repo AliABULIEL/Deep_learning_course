@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 import logging
 from torch.autograd import Variable
 import utils
@@ -44,16 +43,6 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     logging.info("Validation accuracy : {}".format(val_acc))
     print("train accuracy : {}".format(train_acc))
     print("Validation accuracy : {}".format(val_acc))
-    plt.plot(iteration, train_accuracy)
-    plt.xlabel("No. of Iteration")
-    plt.ylabel(" Train Accuracy")
-    plt.title("Iterations vs Accuracy")
-    plt.show()
 
-    plt.plot(iteration, validate_accuracy)
-    plt.xlabel("No. of Iteration")
-    plt.ylabel(" Valdiation Accuracy")
-    plt.title("Iterations vs Accuracy")
-    plt.show()
-    return model
+    return model, iteration, train_accuracy, validate_accuracy
 

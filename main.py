@@ -6,6 +6,8 @@ import test
 import tfgsm_attack
 import torch
 import torch.nn as nn
+import matplotlib.pyplot as plt
+
 
 
 parser = argparse.ArgumentParser()
@@ -33,7 +35,18 @@ if torch.cuda.is_available():
 fashion_model.to(device)
 
 if(args.train):
-    trained_model = train.train_model(model=fashion_model,train_loader=train_loader,validation_loader=val_loader, epochs=12, learning_rate=0.001, optimizer=torch.optim.Adam(fashion_model.parameters(), lr=0.001), loss_function=nn.CrossEntropyLoss(),device=device)
+    trained_model, iteration, train_accuracy, validate_accuracy = train.train_model(model=fashion_model,train_loader=train_loader,validation_loader=val_loader, epochs=12, learning_rate=0.001, optimizer=torch.optim.Adam(fashion_model.parameters(), lr=0.001), loss_function=nn.CrossEntropyLoss(),device=device)
+    plt.plot(iteration, train_accuracy)
+    plt.xlabel("No. of Iteration")
+    plt.ylabel(" Train Accuracy")
+    plt.title("Iterations vs Accuracy")
+    plt.show()
+
+    plt.plot(iteration, validate_accuracy)
+    plt.xlabel("No. of Iteration")
+    plt.ylabel(" Valdiation Accuracy")
+    plt.title("Iterations vs Accuracy")
+    plt.show()
 if(args.test):
     test.test_model(model=trained_model,test_loader=test_loader,epochs=1,loss_function=nn.CrossEntropyLoss(),device=device)
 if(args.TFGSM):
