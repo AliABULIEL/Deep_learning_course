@@ -1,8 +1,17 @@
 import torch
 from torch.autograd import Variable
-import logging
 import utils
-logging.basicConfig(filename='test.log')
+import logging
+import logging.handlers
+import os
+
+handler = logging.handlers.WatchedFileHandler(
+    os.environ.get("LOGFILE", "test.log"))
+formatter = logging.Formatter(logging.BASIC_FORMAT)
+handler.setFormatter(formatter)
+root = logging.getLogger()
+root.setLevel(os.environ.get("LOGLEVEL", "INFO"))
+root.addHandler(handler)
 
 
 def test_model(model, test_loader, epochs, loss_function,device):
