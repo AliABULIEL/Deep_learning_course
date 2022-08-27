@@ -74,13 +74,13 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     plt.plot(iterations, train_loss)
     plt.xlabel("No. of Iteration")
     plt.ylabel(" Train loss")
-    plt.title("Iterations vs Accuracy")
+    plt.title("Iterations vs Loss function")
     plt.show()
 
     plt.plot(iterations, val_loss)
     plt.xlabel("No. of Iteration")
     plt.ylabel(" Valdiation loss")
-    plt.title("Iterations vs Accuracy")
+    plt.title("Iterations vs Loss function")
     plt.show()
 
     return model
