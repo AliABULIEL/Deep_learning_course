@@ -46,7 +46,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
                 # backprop
 
         print("epoch {} | Validation loss : {} ".format(i, error.detach()))
-        print("\n")
+        print("*******************************")
         val_loss.append(error.detach().to("cpu").numpy())
         # logging.info("epoch {} | train loss : {} ".format(i, error.detach()))
         train_acc = utils.calculate_acc(train_loader, model, 100,device)
