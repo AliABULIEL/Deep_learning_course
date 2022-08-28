@@ -33,7 +33,7 @@ if args.TFGSM:
     X, Y = next(iter(test_loader))
     attack = tfgsm_attack.FGSMAttack(trained_model,[0.5],test_loader,device,Y.to(device))
     attack.run()
-if args.deepfool:
+if args.DEEPFOOL:
     import deep_fool
     deep_fool_instance = deep_fool.DeepFoolAttack(trained_model, test_loader,device)
     deep_fool_instance.run()
