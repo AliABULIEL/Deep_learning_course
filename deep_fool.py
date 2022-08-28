@@ -82,7 +82,7 @@ class DeepFoolAttack:
             pert_label = self.deepfool(data)
             if (pert_label.item() != label.item()):
                 success_attacks += 1
-        print("Attack Success Rate = {} / {}".format(success_attacks, len(self.test_dataloader)))
+        print("Attack Success Rate = {} ".format(success_attacks))
 
 
 
