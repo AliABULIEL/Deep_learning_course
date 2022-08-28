@@ -71,13 +71,9 @@ class DeepFoolAttack:
 
         r_tot = (1 + self.overshoot) * r_tot
 
-        if (loopNumber >= 9):
-            print("Loop Number: " + str(loopNumber))
-            print("LAbel is: " + str(newLabel))
         return newLabel
 
     def run(self):
-        print("run")
         # print(len(self.test_dataloader))
         success_attacks = 0
         for data, label in self.test_dataloader:

@@ -5,7 +5,7 @@ from torch import nn
 
 
 class FGSMAttack():
-    def __init__(self, model, epsilons, test_dataloader, device, target=None):
+    def __init__(self, model, epsilons, test_dataloader, device, target):
         self.model = model
         self.epsilons = epsilons
         self.test_dataloader = test_dataloader
@@ -13,8 +13,7 @@ class FGSMAttack():
         self.adv_examples = {}
         self.device = device
 
-    def perturb(self, x, eps, grad):
-        x_prime = None
+    def perturb_image(self, x, eps, grad):
         x_prime = x - eps * grad.sign()
         # keep image data in the [0,1] range
         x_prime = torch.clamp(x_prime, 0, 1)
@@ -54,7 +53,7 @@ class FGSMAttack():
                 loss.backward()
                 data_grad = data.grad
 
-                perturbed_data = self.perturb(data, eps, data_grad)
+                perturbed_data = self.perturb_image(data, eps, data_grad)
 
                 # predict class for adversarial sample
                 adv_output = self.model(perturbed_data)
