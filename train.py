@@ -2,6 +2,7 @@ import torch
 from torch.autograd import Variable
 import utils
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 def train_model(model, train_loader, validation_loader, epochs, learning_rate, optimizer, loss_function, device):
@@ -14,6 +15,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     iterations = []
     train_loss = []
     val_loss = []
+    train_losses = []
     for i in range(epochs):
         count += 1
         iterations.append(count)
@@ -32,7 +34,10 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
             error.backward()
             # backprop
             optimizer.step()
-        print("epoch {} | train loss : {} ".format(i, error.detach()))
+            train_losses.append(error.detach().cpu().numpy())
+        avg = np.mean(train_losses)
+        train_losses = []
+        print("epoch {} | train loss : {} ".format(i, avg))
         train_loss.append(error.detach().cpu().numpy())
         model.eval()
         with torch.no_grad():
