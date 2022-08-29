@@ -26,7 +26,7 @@ X, Y = next(iter(test_loader))
 
 if args.train:
     import train
-    trained_model = train.train_model(model=fashion_model, train_loader=train_loader, validation_loader=val_loader, epochs=1, learning_rate=0.001, optimizer=torch.optim.Adam(fashion_model.parameters(), lr=0.001), loss_function=nn.CrossEntropyLoss(), device=device)
+    trained_model = train.train_model(model=fashion_model, train_loader=train_loader, validation_loader=val_loader, epochs=12, learning_rate=0.001, optimizer=torch.optim.Adam(fashion_model.parameters(), lr=0.001), loss_function=nn.CrossEntropyLoss(), device=device)
 if args.test:
     import test
     test.test_model(model=trained_model, test_loader=test_loader, epochs=12, loss_function=nn.CrossEntropyLoss(), device=device)
