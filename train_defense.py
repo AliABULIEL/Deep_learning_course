@@ -90,31 +90,31 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     # plot accuarcy
     # logging.info("train accuracy : {}".format(train_acc))
     # logging.info("Validation accuracy : {}".format(val_acc))
-    print("train accuracy : {}".format(train_acc))
-    print("Validation accuracy : {}".format(val_acc))
-    plt.plot(iterations, train_accuracy)
-    plt.xlabel("No. of Iteration")
-    plt.ylabel(" Train Accuracy")
-    plt.title("Iterations vs Accuracy")
-    plt.show()
-
-    plt.plot(iterations, validate_accuracy)
-    plt.xlabel("No. of Iteration")
-    plt.ylabel(" Valdiation Accuracy")
-    plt.title("Iterations vs Accuracy")
-    plt.show()
-
-    plt.plot(iterations, train_loss)
-    plt.xlabel("No. of Iteration")
-    plt.ylabel(" Train loss")
-    plt.title("Iterations vs Loss function")
-    plt.show()
-
-    plt.plot(iterations, val_loss)
-    plt.xlabel("No. of Iteration")
-    plt.ylabel(" Valdiation loss")
-    plt.title("Iterations vs Loss function")
-    plt.show()
+    # print("train accuracy : {}".format(train_acc))
+    # print("Validation accuracy : {}".format(val_acc))
+    # plt.plot(iterations, train_accuracy)
+    # plt.xlabel("No. of Iteration")
+    # plt.ylabel(" Train Accuracy")
+    # plt.title("Iterations vs Accuracy")
+    # plt.show()
+    #
+    # plt.plot(iterations, validate_accuracy)
+    # plt.xlabel("No. of Iteration")
+    # plt.ylabel(" Valdiation Accuracy")
+    # plt.title("Iterations vs Accuracy")
+    # plt.show()
+    #
+    # plt.plot(iterations, train_loss)
+    # plt.xlabel("No. of Iteration")
+    # plt.ylabel(" Train loss")
+    # plt.title("Iterations vs Loss function")
+    # plt.show()
+    #
+    # plt.plot(iterations, val_loss)
+    # plt.xlabel("No. of Iteration")
+    # plt.ylabel(" Valdiation loss")
+    # plt.title("Iterations vs Loss function")
+    # plt.show()
 
     return model
 
