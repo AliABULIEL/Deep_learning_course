@@ -15,6 +15,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     iterations = []
     train_loss = []
     train_losses = []
+    train_loss_attack = []
     train_loss_attacked = []
     val_loss = []
     tfgsm = tfgsm_attack.FGSMAttack(model,[0.5],train_loader,device,Y.to(device))
@@ -63,7 +64,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
         train_loss_attacked = []
         print("epoch {} | train loss after attack  : {} ".format(i, avg))
         print("Successful attack  {} , correct predctions for this epoch {} / {}".format(total-correct, correct, total))
-        train_loss.append(avg)
+        train_loss_attack.append(avg)
         model.eval()
         with torch.no_grad():
             val_lossess = []
@@ -87,34 +88,39 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
         train_accuracy.append(train_acc)
         validate_accuracy.append(val_acc)
 
-    # plot accuarcy
+    # plot accua rcy
     # logging.info("train accuracy : {}".format(train_acc))
     # logging.info("Validation accuracy : {}".format(val_acc))
-    # print("train accuracy : {}".format(train_acc))
-    # print("Validation accuracy : {}".format(val_acc))
-    # plt.plot(iterations, train_accuracy)
-    # plt.xlabel("No. of Iteration")
-    # plt.ylabel(" Train Accuracy")
-    # plt.title("Iterations vs Accuracy")
-    # plt.show()
-    #
-    # plt.plot(iterations, validate_accuracy)
-    # plt.xlabel("No. of Iteration")
-    # plt.ylabel(" Valdiation Accuracy")
-    # plt.title("Iterations vs Accuracy")
-    # plt.show()
-    #
-    # plt.plot(iterations, train_loss)
-    # plt.xlabel("No. of Iteration")
-    # plt.ylabel(" Train loss")
-    # plt.title("Iterations vs Loss function")
-    # plt.show()
-    #
-    # plt.plot(iterations, val_loss)
-    # plt.xlabel("No. of Iteration")
-    # plt.ylabel(" Valdiation loss")
-    # plt.title("Iterations vs Loss function")
-    # plt.show()
+    print("train accuracy : {}".format(train_acc))
+    print("Validation accuracy : {}".format(val_acc))
+    plt.plot(iterations, train_accuracy)
+    plt.xlabel("No. of Iteration")
+    plt.ylabel(" Train Accuracy")
+    plt.title("Iterations vs Accuracy")
+    plt.show()
 
+    plt.plot(iterations, validate_accuracy)
+    plt.xlabel("No. of Iteration")
+    plt.ylabel(" Valdiation Accuracy")
+    plt.title("Iterations vs Accuracy")
+    plt.show()
+
+    plt.plot(iterations, train_loss)
+    plt.xlabel("No. of Iteration")
+    plt.ylabel(" Train loss")
+    plt.title("Iterations vs Loss function")
+    plt.show()
+
+    plt.plot(iterations, val_loss)
+    plt.xlabel("No. of Iteration")
+    plt.ylabel(" Valdiation loss")
+    plt.title("Iterations vs Loss function")
+    plt.show()
+
+    plt.plot(iterations, train_loss_attack)
+    plt.xlabel("No. of Iteration")
+    plt.ylabel(" Train loss after attack and defense")
+    plt.title("Iterations vs Loss function")
+    plt.show()
     return model
 
