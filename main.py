@@ -40,8 +40,10 @@ if args.DEEPFOOL:
     deep_fool_instance.run()
 if args.defense:
     import train_defense
+    import tfgsm_attack
     fashion_model_defensed = model.Fashion_MNIST_CNN()
     trained_model_defensed = train_defense.train_model(model=fashion_model, train_loader=train_loader, validation_loader=val_loader, epochs=7, learning_rate=0.001, optimizer=torch.optim.Adam(fashion_model.parameters(), lr=0.001), loss_function=nn.CrossEntropyLoss(), device=device, Y=Y.to(device))
-
+    attack = tfgsm_attack.FGSMAttack(trained_model_defensed, [0.5], test_loader, device, Y.to(device))
+    attack.run()
 
 
