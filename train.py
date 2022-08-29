@@ -38,9 +38,10 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
         avg = np.mean(train_losses)
         train_losses = []
         print("epoch {} | train loss : {} ".format(i, avg))
-        train_loss.append(error.detach().cpu().numpy())
+        train_loss.append(avg)
         model.eval()
         with torch.no_grad():
+            val_lossess = []
             for j, (data, label) in enumerate(validation_loader):
                 data, label = data.to(device), label.to(device)
                 data = Variable(data.view(100, 1, 28, 28))
@@ -49,10 +50,13 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
                 y_hat = model(data)
                 # calculate loss
                 error = loss_function(y_hat, label)
+                val_lossess.append(error.detach().cpu().numpy())
                 # backprop
 
-        print("epoch {} | Validation loss : {} ".format(i, error.detach()))
-        val_loss.append(error.detach().to("cpu").numpy())
+        avg = np.mean(val_lossess)
+        val_lossess = []
+        print("epoch {} | Validation loss : {} ".format(i,avg))
+        val_loss.append(avg)
         # logging.info("epoch {} | train loss : {} ".format(i, error.detach()))
         train_acc = utils.calculate_acc(train_loader, model, 100,device)
         val_acc = utils.calculate_acc(validation_loader, model, 100,device)
