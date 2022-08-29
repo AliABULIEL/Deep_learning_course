@@ -42,6 +42,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
             optimizer.step()
             train_losses.append(error.detach().cpu().numpy())
             # train the attacked data
+            data.requires_grad = True
             attacked_data = tfgsm.perturb_image(data, 0.5, data.grad)
             optimizer.zero_grad()
             y_attacked = model(attacked_data.to(device))

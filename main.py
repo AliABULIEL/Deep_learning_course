@@ -41,7 +41,7 @@ if args.DEEPFOOL:
 if args.defense:
     import train_defense
     fashion_model_defensed = model.Fashion_MNIST_CNN()
-    trained_model_defensed = train_defense.train_model(model=fashion_model, train_loader=train_loader, validation_loader=val_loader, epochs=12, learning_rate=0.001, optimizer=torch.optim.Adam(fashion_model.parameters(), lr=0.001), loss_function=nn.CrossEntropyLoss(), device=device, Y=Y.to(device))
+    trained_model_defensed = train_defense.train_model(model=fashion_model, train_loader=train_loader, validation_loader=val_loader, epochs=2, learning_rate=0.001, optimizer=torch.optim.Adam(fashion_model.parameters(), lr=0.001), loss_function=nn.CrossEntropyLoss(), device=device, Y=Y.to(device))
 
 
 
