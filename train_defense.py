@@ -33,17 +33,19 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
             # flatten the image to vector of size 28*28
             # data = data.view(-1, n_features)
             # calculate output
+            data.requires_grad = True
             y_hat = model(data)
             # calculate loss
             error = loss_function(y_hat, label)
             error.backward()
+            attacked_data = tfgsm.perturb_image(data, 0.5, data.grad)
             train_losses.append(error.data.item())
             # backprop
             optimizer.step()
             train_losses.append(error.detach().cpu().numpy())
             # train the attacked data
-            data.requires_grad = True
-            attacked_data = tfgsm.perturb_image(data, 0.5, data.grad)
+
+
             optimizer.zero_grad()
             y_attacked = model(attacked_data.to(device))
             error_attacked = loss_function(y_attacked, label)
