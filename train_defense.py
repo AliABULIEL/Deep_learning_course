@@ -63,7 +63,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
         avg = np.mean(train_loss_attacked)
         train_loss_attacked = []
         print("epoch {} | train loss after attack  : {} ".format(i, avg))
-        print("epoch {} | Successful attack  {} , correct predctions for this epoch {} / {}".format(total-correct, correct, total))
+        print("epoch {} |Successful attack  {} , correct predctions for this epoch {} / {}".format(i, total-correct, correct, total))
         train_loss_attack.append(avg)
         model.eval()
         with torch.no_grad():
