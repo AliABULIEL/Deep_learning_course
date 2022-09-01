@@ -16,6 +16,9 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     train_loss = []
     val_loss = []
     train_losses = []
+    best_loss = 100
+    count = 0
+    patience = 5
     for i in range(epochs):
         count += 1
         iterations.append(count)
@@ -40,9 +43,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
         print("epoch {} | train loss : {} ".format(i, avg))
         train_loss.append(avg)
         model.eval()
-        best_loss = 100
-        count = 0
-        patience = 5
+
         with torch.no_grad():
             val_lossess = []
             for j, (data, label) in enumerate(validation_loader):
