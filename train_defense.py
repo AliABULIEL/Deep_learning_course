@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import tfgsm_attack
 import numpy as np
 
+
 def train_model(model, train_loader, validation_loader, epochs, learning_rate, optimizer, loss_function, device, Y):
     print(" Model is {}".format(model))
     # logging.info(model)
