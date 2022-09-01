@@ -3,14 +3,12 @@ from torch.autograd import Variable
 import utils
 import matplotlib.pyplot as plt
 import numpy as np
-from pytorchtools import EarlyStopping
 
 
 
 def train_model(model, train_loader, validation_loader, epochs, learning_rate, optimizer, loss_function, device):
     print(" Model is {}".format(model))
     # logging.info(model)
-    early_stopping = EarlyStopping(patience=5, verbose=True)
     count = 0
     train_accuracy = []
     validate_accuracy = []
@@ -42,6 +40,9 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
         print("epoch {} | train loss : {} ".format(i, avg))
         train_loss.append(avg)
         model.eval()
+        best_loss = 100
+        count = 0
+        patience = 5
         with torch.no_grad():
             val_lossess = []
             for j, (data, label) in enumerate(validation_loader):
@@ -53,12 +54,22 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
                 # calculate loss
                 error = loss_function(y_hat, label)
                 val_lossess.append(error.detach().cpu().numpy())
+                best_model = None
+                if(np.average(val_lossess)< best_loss):
+                    best_loss = np.average(val_lossess)
+                    torch.save(model.state_dict(), F"/content/gdrive/My Drive/ALI_Amar/best_model.pt")
+                    patience = 5
+                    best_model = model
+                    print( "patience reset")
+                else:
+                    print(" patince decrease " + patience)
+                    patience -= 1
 
-                early_stopping(np.average(val_lossess), model)
-
-                if early_stopping.early_stop:
-                    print("Early stopping")
+                if(patience == 0):
+                    print("early stopping")
                     break
+
+
 
                 # load the last checkpoint with the best model
             model.load_state_dict(torch.load('checkpoint.pt'))
@@ -103,5 +114,5 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     plt.title("Iterations vs Loss function")
     plt.show()
 
-    return model
+    return best_model
 
