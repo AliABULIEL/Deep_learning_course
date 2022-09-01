@@ -3,12 +3,14 @@ from torch.autograd import Variable
 import utils
 import matplotlib.pyplot as plt
 import numpy as np
+from pytorchtools import EarlyStopping
+
 
 
 def train_model(model, train_loader, validation_loader, epochs, learning_rate, optimizer, loss_function, device):
     print(" Model is {}".format(model))
     # logging.info(model)
-
+    early_stopping = EarlyStopping(patience=5, verbose=True)
     count = 0
     train_accuracy = []
     validate_accuracy = []
@@ -51,6 +53,15 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
                 # calculate loss
                 error = loss_function(y_hat, label)
                 val_lossess.append(error.detach().cpu().numpy())
+
+                early_stopping(np.average(val_lossess), model)
+
+                if early_stopping.early_stop:
+                    print("Early stopping")
+                    break
+
+                # load the last checkpoint with the best model
+            model.load_state_dict(torch.load('checkpoint.pt'))
                 # backprop
 
         avg = np.mean(val_lossess)
