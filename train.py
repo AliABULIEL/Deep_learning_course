@@ -19,6 +19,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     best_loss = 100
     count = 0
     patience = 5
+    best_model = None
     for i in range(epochs):
         count += 1
         iterations.append(count)
@@ -55,7 +56,9 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
                 # calculate loss
                 error = loss_function(y_hat, label)
                 val_lossess.append(error.detach().cpu().numpy())
-                best_model = None
+            print(" best loss is " + best_loss)
+            print(" current loss is " +np.average(val_lossess) )
+            print( " patience 1 is " + patience)
             if(np.average(val_lossess)< best_loss):
                     print("patience reset")
                     best_loss = np.average(val_lossess)
