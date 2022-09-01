@@ -56,13 +56,13 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
                 val_lossess.append(error.detach().cpu().numpy())
                 best_model = None
                 if(np.average(val_lossess)< best_loss):
-                    print( "patience reset")
+                    print("patience reset")
                     best_loss = np.average(val_lossess)
                     torch.save(model.state_dict(), F"/content/gdrive/My Drive/best_model.pt")
                     patience = 5
                     best_model = model
                 else:
-                    print(" patince decrease " + patience)
+                    print(" patince decrease " + str(patience))
                     patience -= 1
 
                 if(patience == 0):
@@ -71,8 +71,6 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
 
 
 
-                # load the last checkpoint with the best model
-            model.load_state_dict(torch.load('checkpoint.pt'))
                 # backprop
 
         avg = np.mean(val_lossess)
