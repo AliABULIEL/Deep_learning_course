@@ -69,7 +69,6 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
         train_loss.append(avg)
         avg = np.mean(train_loss_attacked)
         train_loss_attacked = []
-        print("epoch {} | train loss after attack  : {} ".format(i, avg))
         print("epoch "+str(i)+" | Successful attack " + str(total-correct)+"  , correct predctions for this epoch "+str(correct)+ " / "+ str(total))
         train_loss_attack.append(avg)
         model.eval()
@@ -94,7 +93,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
                 temp_patience = 5
                 best_model = model
             elif (current_loss >= best_loss):
-                print("patince decrease " + str(patience))
+                print("patince decrease " + str(temp_patience))
                 temp_patience -= 1
 
             if (temp_patience == 0):
@@ -145,9 +144,9 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     plt.title("Iterations vs Loss function")
     plt.show()
 
-    x = iterations[-1]
-    x += 1
-    iterations.append(x)
+    # x = iterations[-1]
+    # x += 1
+    # iterations.append(x)
     plt.plot(iterations, train_loss)
     plt.xlabel("No. of Iteration")
     plt.ylabel(" Train loss")
@@ -156,5 +155,5 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     plt.show()
 
 
-    return model
+    return best_model
 
