@@ -88,6 +88,7 @@ class DeepFoolAttack:
             I = (np.array(f_image.cpu().detach())).flatten().argsort()[::-1]
             label_before = I[0]  # the label before
             if data is None:
+                print("!!!!!!!")
                 print(data)
                 continue
             pert_label, isEqual, changedImage = self.deepfool(data)
