@@ -91,6 +91,8 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     # plot accuarcy
     # logging.info("train accuracy : {}".format(train_acc))
     # logging.info("Validation accuracy : {}".format(val_acc))
+    print("last iteration " + iterations[-1])
+    print(" whre is patience" + iterations[-1]-patience)
     print("train accuracy : {}".format(train_acc))
     print("Validation accuracy : {}".format(val_acc))
     plt.plot(iterations, train_accuracy)
@@ -107,7 +109,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     plt.axvline(x=iterations[-1]-patience, color='b', ls='--')
     plt.show()
 
-    plt.plot(iterations, train_loss)
+    plt.plot(iterations[:-2], train_loss)
     plt.xlabel("No. of Iteration")
     plt.ylabel(" Train loss")
     plt.title("Iterations vs Loss function")
