@@ -56,17 +56,18 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
                 # calculate loss
                 error = loss_function(y_hat, label)
                 val_lossess.append(error.detach().cpu().numpy())
-            print(" best loss is " + best_loss)
-            print(" current loss is " +np.average(val_lossess) )
-            print( " patience 1 is " + patience)
-            if(np.average(val_lossess)< best_loss):
+            current_loss = np.average(val_lossess)
+            print(" best loss is " + str(best_loss))
+            print(" current loss is " + str(current_loss))
+            print("patience 1 is " + str(patience))
+            if(current_loss< best_loss):
                     print("patience reset")
                     best_loss = np.average(val_lossess)
                     torch.save(model.state_dict(), F"/content/gdrive/My Drive/best_model.pt")
                     patience = 5
                     best_model = model
-            else:
-                    print(" patince decrease " + str(patience))
+            elif(current_loss >= best_loss):
+                    print("patince decrease " + str(patience))
                     patience -= 1
 
             if(patience == 0):
