@@ -19,7 +19,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     train_loss_attack = []
     train_loss_attacked = []
     val_loss = []
-    attack_model = deep_fool.DeepFoolAttack(model=model, device=device)
+    attack_model = deep_fool.DeepFoolAttack(model=model, device=device,max_iter=4)
     best_loss = 100
     count = 0
     temp_patience = patience
