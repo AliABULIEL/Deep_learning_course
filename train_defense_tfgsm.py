@@ -117,12 +117,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     print("Validation accuracy : {}".format(val_acc))
     print("train accuracy : {}".format(train_acc))
     print("Validation accuracy : {}".format(val_acc))
-    plt.plot(iterations, train_accuracy)
-    plt.xlabel("No. of Iteration")
-    plt.ylabel(" Train Accuracy")
-    plt.title("Iterations vs Accuracy")
-    plt.axvline(x=iterations[-1] - patience + 1, color='b', ls='--')
-    plt.show()
+
 
     plt.plot(iterations, validate_accuracy)
     plt.xlabel("No. of Iteration")
@@ -152,6 +147,12 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     plt.xlabel("No. of Iteration")
     plt.ylabel(" Train loss")
     plt.title("Iterations vs Loss function")
+    plt.axvline(x=iterations[-1] - patience + 1, color='b', ls='--')
+    plt.show()
+    plt.plot(iterations[:-1], train_accuracy)
+    plt.xlabel("No. of Iteration")
+    plt.ylabel(" Train Accuracy")
+    plt.title("Iterations vs Accuracy")
     plt.axvline(x=iterations[-1] - patience + 1, color='b', ls='--')
     plt.show()
 
