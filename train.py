@@ -22,7 +22,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     best_model = None
     for i in range(epochs):
         count += 1
-        iterations.append(count)
+
         print("*******************************")
         for j, (data, label) in enumerate(train_loader):
             data, label = data.to(device), label.to(device)
@@ -57,9 +57,9 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
                 error = loss_function(y_hat, label)
                 val_lossess.append(error.detach().cpu().numpy())
             current_loss = np.average(val_lossess)
-            print(" best loss is " + str(best_loss))
-            print(" current loss is " + str(current_loss))
-            print("patience 1 is " + str(patience))
+            # print(" best loss is " + str(best_loss))
+            # print(" current loss is " + str(current_loss))
+            # print("patience 1 is " + str(patience))
             if(current_loss< best_loss):
                     print("patience reset")
                     best_loss = np.average(val_lossess)
@@ -67,7 +67,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
                     patience = 5
                     best_model = model
             elif(current_loss >= best_loss):
-                    print("patince decrease " + str(patience))
+                    # print("patince decrease " + str(patience))
                     patience -= 1
 
             if(patience == 0):
@@ -77,7 +77,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
 
 
                 # backprop
-
+        iterations.append(count)
         avg = np.mean(val_lossess)
         val_lossess = []
         print("epoch {} | Validation loss : {} ".format(i,avg))
@@ -97,24 +97,28 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     plt.xlabel("No. of Iteration")
     plt.ylabel(" Train Accuracy")
     plt.title("Iterations vs Accuracy")
+    plt.axvline(x=iterations[-1]-patience, color='b', ls='--')
     plt.show()
 
     plt.plot(iterations, validate_accuracy)
     plt.xlabel("No. of Iteration")
     plt.ylabel(" Valdiation Accuracy")
     plt.title("Iterations vs Accuracy")
+    plt.axvline(x=iterations[-1]-patience, color='b', ls='--')
     plt.show()
 
     plt.plot(iterations, train_loss)
     plt.xlabel("No. of Iteration")
     plt.ylabel(" Train loss")
     plt.title("Iterations vs Loss function")
+    plt.axvline(x=iterations[-1]-patience, color='b', ls='--')
     plt.show()
 
     plt.plot(iterations, val_loss)
     plt.xlabel("No. of Iteration")
     plt.ylabel(" Valdiation loss")
     plt.title("Iterations vs Loss function")
+    plt.axvline(x=iterations[-1]-patience, color='b', ls='--')
     plt.show()
 
     return best_model
