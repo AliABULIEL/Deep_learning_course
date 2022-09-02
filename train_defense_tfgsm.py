@@ -6,7 +6,7 @@ import tfgsm_attack
 import numpy as np
 
 
-def train_model(model, train_loader, validation_loader, epochs, learning_rate, optimizer, loss_function, device, Y):
+def train_model(model, train_loader, validation_loader, epochs, learning_rate, optimizer, loss_function, device, Y, patience):
     print(" Model is {}".format(model))
     # logging.info(model)
 
@@ -19,7 +19,12 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     train_loss_attack = []
     train_loss_attacked = []
     val_loss = []
+    temp_patience = patience
     tfgsm = tfgsm_attack.FGSMAttack(model,[0.5],train_loader,device,Y.to(device))
+    best_loss = 100
+    count = 0
+    temp_patience = patience
+    best_model = None
 
     for i in range(epochs):
         correct = 0
@@ -58,13 +63,14 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
             correct += (np.argmax(preds_np, axis=1) == label.cpu().detach().numpy()).sum()
             total = total+train_loader.batch_size
         avg = np.mean(train_losses)
+
         train_losses = []
         print("epoch {} | train loss : {} ".format(i, avg))
         train_loss.append(avg)
         avg = np.mean(train_loss_attacked)
         train_loss_attacked = []
         print("epoch {} | train loss after attack  : {} ".format(i, avg))
-        print("epoch "+str(i)+" | Successful attack " +str(total-correct)+"  , correct predctions for this epoch "+str(correct)+ " / "+ str(total))
+        print("epoch "+str(i)+" | Successful attack " + str(total-correct)+"  , correct predctions for this epoch "+str(correct)+ " / "+ str(total))
         train_loss_attack.append(avg)
         model.eval()
         with torch.no_grad():
@@ -79,6 +85,20 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
                 error = loss_function(y_hat, label)
                 # backprop
                 val_lossess.append(error.detach().cpu().numpy())
+            current_loss = np.mean(val_lossess)
+            if (current_loss < best_loss):
+                # print("patience reset")
+                best_loss = np.average(val_lossess)
+                torch.save(model.state_dict(), F"/content/gdrive/My Drive/best_model.pt")
+                temp_patience = 5
+                best_model = model
+            elif (current_loss >= best_loss):
+                # print("patince decrease " + str(patience))
+                temp_patience -= 1
+
+            if (temp_patience == 0):
+                print("early stopping")
+                break
         avg = np.mean(val_lossess)
         val_lossess = []
         print("epoch {} | Validation loss : {} ".format(i, avg))
@@ -88,6 +108,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
         val_acc = utils.calculate_acc(validation_loader, model, 100,device)
         train_accuracy.append(train_acc)
         validate_accuracy.append(val_acc)
+
 
     # plot accua rcy
     # logging.info("train accuracy : {}".format(train_acc))
