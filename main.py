@@ -11,6 +11,8 @@ parser.add_argument("-e", "--test", nargs='?', help="test NN for FashionMinst da
 parser.add_argument("-f", "--TFGSM", nargs='?',  help="run TFGSM adversial attack", const=True)
 parser.add_argument("-d", "--DEEPFOOL", nargs='?',  help="run Deep fool adversial attack", const=True)
 parser.add_argument("-s", "--defense", nargs='?',  help="run Deep fool adversial attack", const=True)
+parser.add_argument("-p", "--DeepDefense", nargs='?',  help="run deepfool defence", const=True)
+
 
 
 args = parser.parse_args()
@@ -38,6 +40,13 @@ if args.DEEPFOOL:
     import deep_fool
     deep_fool_instance = deep_fool.DeepFoolAttack(model=trained_model, device= device)
     deep_fool_instance.run(test_loader=test_loader)
+if args.DeepDefense:
+    import deep_fool_train_defnse
+    import deep_fool
+    fashion_deep_model = model.Fashion_MNIST_CNN()
+    trained_model_defense = deep_fool_train_defnse.train_model(model=fashion_deep_model, train_loader=train_loader,validation_loader=val_loader, epochs=20, learning_rate=0.001, optimizer=torch.optim.Adam(fashion_model.parameters(), lr=0.001), loss_function=nn.CrossEntropyLoss(), device=device, patience=5)
+    attack = deep_fool.DeepFoolAttack(model=trained_model_defense, device= device)
+    attack.evaluate_attack(test_dataloader=test_loader,model=trained_model_defense)
 if args.defense:
     import train_defense_tfgsm
     import tfgsm_attack
