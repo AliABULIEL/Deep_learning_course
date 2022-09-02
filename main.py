@@ -10,7 +10,10 @@ parser.add_argument("-t", "--train", nargs='?', help="train NN for FashionMinst 
 parser.add_argument("-e", "--test", nargs='?', help="test NN for FashionMinst dataset", const=True)
 parser.add_argument("-f", "--TFGSM", nargs='?',  help="run TFGSM adversial attack", const=True)
 parser.add_argument("-d", "--DEEPFOOL", nargs='?',  help="run Deep fool adversial attack", const=True)
-parser.add_argument("-s", "--defense", nargs='?',  help="run Deep fool adversial attack", const=True)
+parser.add_argument("-s", "--defense_tfgsm", nargs='?',  help="run Deep fool adversial attack", const=True)
+parser.add_argument("-s", "--defense_deepfool", nargs='?',  help="run Deep fool adversial attack", const=True)
+
+
 
 
 args = parser.parse_args()
@@ -22,7 +25,7 @@ device = torch.device('cpu')
 if torch.cuda.is_available():
     device = torch.device('cuda')
 fashion_model.to(device)
-X, Y = next(iter(test_loader))
+X, Y = next(next(iter(test_loader)))
 
 if args.train:
     import train
@@ -36,14 +39,19 @@ if args.TFGSM:
     attack.run()
 if args.DEEPFOOL:
     import deep_fool
-    deep_fool_instance = deep_fool.DeepFoolAttack(trained_model, test_loader, device)
+    deep_fool_instance = deep_fool.DeepFoolAttack(model=trained_model, device=device)
     deep_fool_instance.run(test_loader=test_loader)
-if args.defense:
+if args.defense_tfgsm:
     import train_defense_tfgsm
     import tfgsm_attack
     fashion_model_defensed = model.Fashion_MNIST_CNN()
-    trained_model_defensed = train_defense_tfgsm.train_model(model=fashion_model, train_loader=train_loader, validation_loader=val_loader, epochs=20, learning_rate=0.001, optimizer=torch.optim.Adam(fashion_model.parameters(), lr=0.001), loss_function=nn.CrossEntropyLoss(), device=device, Y=Y.to(device), patience=5)
-    attack = tfgsm_attack.FGSMAttack(trained_model_defensed, [0.75], test_loader, device, Y.to(device))
-    attack.run()
-
+    trained_model_defensed = train_defense_tfgsm.train_model(model=fashion_model_defensed, train_loader=train_loader, validation_loader=val_loader, epochs=20, learning_rate=0.001, optimizer=torch.optim.Adam(fashion_model.parameters(), lr=0.001), loss_function=nn.CrossEntropyLoss(), device=device, Y=Y.to(device), patience=5)
+    attack = tfgsm_attack.FGSMAttack(trained_model_defensed, [0.5], test_loader, device, Y.to(device))
+    attack.run(test_loader)
+# if args.defense_deepfool:
+#     import deep_fool_train_defnse
+#
+#     fashion_model_defensed = model.Fashion_MNIST_CNN()
+#     trained_model_defensed = deep_fool_train_defnse.train_model(model= fashion_model_defensed, train_loader=train_loader, validation_loader=val_loader, epochs=20, learning_rate=0.001, optimizer=torch.optim.Adam(fashion_model.parameters(), lr=0.001), loss_function=nn.CrossEntropyLoss(), device=device,  patience=5)
+#     attack = deep_fool.
 
