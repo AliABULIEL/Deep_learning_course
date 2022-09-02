@@ -12,6 +12,8 @@ parser.add_argument("-f", "--TFGSM", nargs='?',  help="run TFGSM adversial attac
 parser.add_argument("-d", "--DEEPFOOL", nargs='?',  help="run Deep fool adversial attack", const=True)
 parser.add_argument("-s", "--defense", nargs='?',  help="run Deep fool adversial attack", const=True)
 parser.add_argument("-p", "--DeepDefense", nargs='?',  help="run deepfool defence", const=True)
+parser.add_argument("-n", "--encoder", nargs='?',  help="run encoder defence", const=True)
+
 
 
 
@@ -54,5 +56,15 @@ if args.defense:
     trained_model_defensed = train_defense_tfgsm.train_model(model=fashion_model, train_loader=train_loader, validation_loader=val_loader, epochs=20, learning_rate=0.001, optimizer=torch.optim.Adam(fashion_model.parameters(), lr=0.001), loss_function=nn.CrossEntropyLoss(), device=device, Y=Y.to(device), patience=5)
     attack = tfgsm_attack.FGSMAttack(trained_model_defensed, [0.5], test_loader, device, Y.to(device))
     attack.run()
+if args.encoder:
+    import encoder_decoder
+    import train
+    import deep_fool
+    encoder = encoder_decoder.ConvAutoencoder()
+    encoder_model = encoder_decoder.Fashion_MNIST_CNN(encoder)
+    encoder_decoder.to(device)
+    trained_model_encoder = train.train_model(model=encoder_model, train_loader=train_loader, validation_loader=val_loader, epochs=20, learning_rate=0.001, optimizer=torch.optim.Adam(fashion_model.parameters(), lr=0.001), loss_function=nn.CrossEntropyLoss(), device=device, patience=5)
+    attack = deep_fool.DeepFoolAttack(model=trained_model, device=device)
+    attack.evaluate_attack(test_dataloader=test_loader, model=trained_model_encoder)
 
 
