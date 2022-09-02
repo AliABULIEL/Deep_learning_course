@@ -142,6 +142,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     plt.xlabel("No. of Iteration")
     plt.ylabel(" Train loss after attack and defense")
     plt.title("Iterations vs Loss function")
+    plt.axvline(x=iterations[-1] - patience + 1, color='b', ls='--')
     plt.show()
 
     # x = iterations[-1]
