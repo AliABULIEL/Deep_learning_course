@@ -46,7 +46,7 @@ if args.DeepDefense:
     import deep_fool_train_defnse
     import deep_fool
     fashion_deep_model = model.Fashion_MNIST_CNN()
-    trained_model_defense = deep_fool_train_defnse.train_model(model=fashion_deep_model, train_loader=train_loader,validation_loader=val_loader, epochs=20, learning_rate=0.001, optimizer=torch.optim.Adam(fashion_model.parameters(), lr=0.001), loss_function=nn.CrossEntropyLoss(), device=device, patience=5)
+    trained_model_defense = deep_fool_train_defnse.train_model(model=fashion_deep_model, train_loader=train_loader,validation_loader=val_loader, epochs=2, learning_rate=0.001, optimizer=torch.optim.Adam(fashion_model.parameters(), lr=0.001), loss_function=nn.CrossEntropyLoss(), device=device, patience=5)
     attack = deep_fool.DeepFoolAttack(model=trained_model_defense, device= device)
     attack.evaluate_attack(test_dataloader=test_loader,model=trained_model_defense)
 if args.defense:
@@ -66,7 +66,7 @@ if args.encoder:
     trained_model_encoder = train.train_model(model=encoder_model, train_loader=train_loader, validation_loader=val_loader, epochs=20, learning_rate=0.001, optimizer=torch.optim.Adam(fashion_model.parameters(), lr=0.001), loss_function=nn.CrossEntropyLoss(), device=device, patience=5)
     attack = deep_fool.DeepFoolAttack(model=trained_model, device=device,max_iter=4)
     print(trained_model_encoder)
-    
+
     attack.evaluate_attack(test_dataloader=test_loader, model=trained_model_encoder)
 
 
