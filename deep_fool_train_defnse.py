@@ -111,8 +111,8 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
         validate_accuracy.append(val_acc)
 
 
-    print("train accuracy : {}".format(train_accuracy[-1]))
-    print("Validation accuracy : {}".format(validate_accuracy[-1]))
+    print("train accuracy : {}".format(train_accuracy[-patience]))
+    print("Validation accuracy : {}".format(validate_accuracy[-patience]))
 
 
 
@@ -120,21 +120,21 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     plt.xlabel("No. of Iteration")
     plt.ylabel(" Valdiation Accuracy")
     plt.title("Iterations vs Accuracy")
-    # plt.axvline(x=iterations[-1] - patience , color='b', ls='--')
+    plt.axvline(x=iterations[-1] - patience , color='b', ls='--')
 
     plt.show()
     plt.plot(iterations[:-1], val_loss)
     plt.xlabel("No. of Iteration")
     plt.ylabel(" Valdiation loss")
     plt.title("Iterations vs Loss function")
-    # plt.axvline(x=iterations[-1] - patience , color='b', ls='--')
+    plt.axvline(x=iterations[-1] - patience , color='b', ls='--')
     plt.show()
 
     plt.plot(iterations, train_loss_attack)
     plt.xlabel("No. of Iteration")
     plt.ylabel(" Train loss after attack and defense")
     plt.title("Iterations vs Loss function")
-    # plt.axvline(x=iterations[-1] - patience , color='b', ls='--')
+    plt.axvline(x=iterations[-1] - patience , color='b', ls='--')
     plt.show()
 
     # x = iterations[-1]
@@ -144,13 +144,13 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     plt.xlabel("No. of Iteration")
     plt.ylabel(" Train loss")
     plt.title("Iterations vs Loss function")
-    # plt.axvline(x=iterations[-1] - patience , color='b', ls='--')
+    plt.axvline(x=iterations[-1] - patience , color='b', ls='--')
     plt.show()
     plt.plot(iterations[:-1], train_accuracy)
     plt.xlabel("No. of Iteration")
     plt.ylabel(" Train Accuracy")
     plt.title("Iterations vs Accuracy")
-    # plt.axvline(x=iterations[-1] - patience , color='b', ls='--')
+    plt.axvline(x=iterations[-1] - patience , color='b', ls='--')
     plt.show()
 
 
