@@ -1,7 +1,5 @@
 import torch
 from torch import nn
-# import logging
-# logging.basicConfig(filename='TFGSM_Attack.log')
 
 
 class FGSMAttack():

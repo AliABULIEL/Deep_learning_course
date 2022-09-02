@@ -112,11 +112,8 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
         validate_accuracy.append(val_acc)
 
 
-    # plot accua rcy
-    # logging.info("train accuracy : {}".format(train_acc))
-    # logging.info("Validation accuracy : {}".format(val_acc))
-    print("train accuracy : {}".format(train_acc))
-    print("Validation accuracy : {}".format(val_acc))
+    print("train accuracy : {}".format(train_accuracy[-patience]))
+    print("Validation accuracy : {}".format(validate_accuracy[-patience]))
 
 
 
