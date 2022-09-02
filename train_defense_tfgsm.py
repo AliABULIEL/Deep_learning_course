@@ -85,9 +85,10 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
                 val_lossess.append(error.detach().cpu().numpy())
             current_loss = np.mean(val_lossess)
             print(" temp patience is "+ str(temp_patience))
+            print(" current loss is "+ str(current_loss))
+            print(" best loss is " + str(best_loss))
             if (current_loss < best_loss):
                 print("patience reset")
-                best_loss = np.average(val_lossess)
                 torch.save(model.state_dict(), F"/content/gdrive/My Drive/best_model.pt")
                 temp_patience = patience
                 best_model = model
@@ -133,7 +134,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     plt.axvline(x=iterations[-1] - patience + 1, color='b', ls='--')
     plt.show()
 
-    plt.plot(iterations[:-1], train_loss_attack)
+    plt.plot(iterations, train_loss_attack)
     plt.xlabel("No. of Iteration")
     plt.ylabel(" Train loss after attack and defense")
     plt.title("Iterations vs Loss function")
