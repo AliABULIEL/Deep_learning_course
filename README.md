@@ -27,4 +27,4 @@ to run the peoject:
                 
                 -h shows hints for flags 
                 
-                you have to train the model before test and TFGSM attack*
+                you have to train the model before test and the attacks*
