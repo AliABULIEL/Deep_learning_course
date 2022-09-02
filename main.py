@@ -38,7 +38,7 @@ if args.TFGSM:
     attack.run()
 if args.DEEPFOOL:
     import deep_fool
-    deep_fool_instance = deep_fool.DeepFoolAttack(model=trained_model, device= device)
+    deep_fool_instance = deep_fool.DeepFoolAttack(model=trained_model, device= device,max_iter=4)
     deep_fool_instance.run(test_loader=test_loader)
 if args.DeepDefense:
     import deep_fool_train_defnse
