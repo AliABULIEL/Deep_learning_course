@@ -75,34 +75,32 @@ class DeepFoolAttack:
         # print(image.shape)
         r_tot = (1 + self.overshoot) * r_tot
         return newLabel, (newLabel == label), image
-    def evaluate_attack(self,  test_dataloader, model):
+    def evaluate_attack(self, test_dataloader, model):
         print("run")
         # print(len(self.test_dataloader))
         success_attacks = 0
         hit = 0
-        pred_labels = self.model(test_dataloader)
+
         for data, label in test_dataloader:
             # send data to device
             data, label = data.to(self.device), label.to(self.device)
             f_image = model(data)
             I = (np.array(f_image.cpu().detach())).flatten().argsort()[::-1]
-            # temblabel = I[0]
+            label_before = I[0]  # the label before
             pert_label, isEqual, changedImage = self.deepfool(data)
             changedImage = changedImage.to(self.device)
             f_image = model(changedImage.cuda())
             I2 = (np.array(f_image.cpu().detach())).flatten().argsort()[::-1]
-
-
-
-
-            if I.item() != label:
+            label_after = I2[0]
+            if label_before != label_after:
                 success_attacks += 1
-
-            if I2.item() != label:
-                success_attacks += 1
+            if label_after != label:
+                hit += 1
 
         print("Attack Success Rate = {} / {} = {}".format(success_attacks,
-                                                                       len(test_dataloader), success_attacks/len(test_dataloader)))
+                                                          len(test_dataloader), success_attacks / len(test_dataloader)))
+        print("Acuracy Rate = {} / {} = {}".format(hit,
+                                                   len(test_dataloader), hit / len(test_dataloader)))
     def image_deepfool(self, image):
         f_image = self.model(image)
         I = (np.array(f_image.cpu().detach())).flatten().argsort()[::-1]
