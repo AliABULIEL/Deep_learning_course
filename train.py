@@ -110,7 +110,15 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     plt.ylabel(" Valdiation Accuracy")
     plt.title("Iterations vs Accuracy")
     plt.axvline(x=iterations[-1]-5, color='b', ls='--')
+    
     plt.show()
+    plt.plot(iterations, val_loss)
+    plt.xlabel("No. of Iteration")
+    plt.ylabel(" Valdiation loss")
+    plt.title("Iterations vs Loss function")
+    plt.axvline(x=iterations[-1] - 5, color='b', ls='--')
+    plt.show()
+
     x = iterations[-1]
     x += 1
     iterations.append(x)
@@ -121,12 +129,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     plt.axvline(x=iterations[-1]-5, color='b', ls='--')
     plt.show()
 
-    plt.plot(iterations, val_loss)
-    plt.xlabel("No. of Iteration")
-    plt.ylabel(" Valdiation loss")
-    plt.title("Iterations vs Loss function")
-    plt.axvline(x=iterations[-1]-5, color='b', ls='--')
-    plt.show()
+
 
     return best_model
 
