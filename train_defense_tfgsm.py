@@ -91,6 +91,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
                 torch.save(model.state_dict(), F"/content/gdrive/My Drive/best_model.pt")
                 temp_patience = patience
                 best_model = model
+                best_loss = current_loss
             elif (current_loss >= best_loss):
 
                 temp_patience -= 1
