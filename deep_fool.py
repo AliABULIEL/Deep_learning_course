@@ -20,7 +20,9 @@ class DeepFoolAttack:
             tempI = (np.array(f_image[j].cpu().detach())).flatten().argsort()[::-1]
             I.append(tempI)
         I = np.array(I)
-        for j in range(100):
+
+
+        for j in range(image.size(0)):
             imageToChange = copy.deepcopy(image[j].view(1, 1, 28, 28))
             w = np.zeros(image[j].shape)
             r_tot = np.zeros(image[j].shape)
@@ -29,26 +31,34 @@ class DeepFoolAttack:
             fs = self.model(x)
             temp2I = I
             I = I[j]
+
             label = I[0]
             fs_list = [fs[0, I[k]] for k in range(self.num_classes)]
             newLabel = label
 
             while newLabel == label and loopNumber < self.max_iter:
+
                 pert = np.inf  # the largest value
                 fs[0, I[0]].backward(retain_graph=True)
                 rightGradiant = x.grad.data.cpu().numpy().copy()
+
                 for k in range(1, self.num_classes):
+
                     fs[0, I[k]].backward(retain_graph=True)
                     currentGradiant = x.grad.data.cpu().numpy().copy()
+
                     # set new w_k and new f_k
                     w_k = currentGradiant - rightGradiant  # calculating  value to be in other class
                     f_k = (fs[0, I[k]] - fs[0, I[0]]).data.cpu().numpy()
+
                     tempPert = abs(f_k) / np.linalg.norm(
                         w_k.flatten())  # calculating the perturbations that we add to get to each class
+
                     # determine which w_k to use
                     if tempPert < pert:  # choose the minimum
                         pert = tempPert
                         w = w_k
+
                 # compute r_i and r_tot
                 # Added 1e-4 for numerical stability
                 r_i = (pert + 1e-4) * w / np.linalg.norm(w)  # calculating the nearest hyperplane
@@ -58,12 +68,45 @@ class DeepFoolAttack:
                 x = torch.tensor(imageToChange, requires_grad=True)
                 fs = self.model(x)
                 newLabel = np.argmax(fs.data.cpu().numpy().flatten())
+
                 loopNumber += 1
             I = temp2I
             image[j] = imageToChange.view(1, 1, 28, 28)
-        print(image.shape)
+
+        # print(image.shape)
         r_tot = (1 + self.overshoot) * r_tot
         return newLabel, (newLabel == label), image
+
+    def evaluate_attack(self,  test_dataloader, model):
+        print("run")
+        # print(len(self.test_dataloader))
+        success_attacks = 0
+        hit = 0
+        pred_labels = self.model(test_dataloader)
+        for data, label in test_dataloader:
+            # send data to device
+            data, label = data.to(self.device), label.to(self.device)
+            f_image = model(data)
+            I = (np.array(f_image.cpu().detach())).flatten().argsort()[::-1]
+            # temblabel = I[0]
+            pert_label, isEqual, changedImage = self.deepfool(data)
+            changedImage = changedImage.to(self.device)
+            f_image = model(changedImage.cuda())
+            I2 = (np.array(f_image.cpu().detach())).flatten().argsort()[::-1]
+
+
+
+
+            if I.item() != label:
+                success_attacks += 1
+
+            if I2.item() != label:
+                success_attacks += 1
+
+        print("Attack Success Rate = {} / {} = {}".format(success_attacks,
+                                                                       len(test_dataloader), success_attacks/len(test_dataloader)))
+
+
 
     def image_deepfool(self, image):
         f_image = self.model(image)
@@ -123,13 +166,13 @@ class DeepFoolAttack:
 
         return newLabel
 
-    def return_noisy_batch(self, trainLoader):
-        for j, (data, label) in enumerate(trainLoader):
-            data, label = data.to(self.device), label.to(self.device)
-            data = Variable(data.view(100, 1, 28, 28))
+    def return_noisy_batch(self, data):
+            data = data.to(self.device)
+            data = Variable(data.view(-1, 1, 28, 28))
+
+            # shape = data.shape
             newLabel, isChanged, noisy_img = self.deepfool(data)
-            trainLoader[j] = noisy_img
-        return trainLoader
+            return noisy_img
 
     def run(self, test_loader):
         # print(len(self.test_dataloader))
