@@ -19,7 +19,6 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     train_loss_attack = []
     train_loss_attacked = []
     val_loss = []
-    temp_patience = patience
     tfgsm = tfgsm_attack.FGSMAttack(model,[0.5],train_loader,device,Y.to(device))
     best_loss = 100
     count = 0
