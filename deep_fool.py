@@ -86,14 +86,14 @@ class DeepFoolAttack:
             # send data to device
             data, label = data.to(self.device), label.to(self.device)
             f_image = model(data)
-            print("########")
-            print(f_image)
+            # print("########")
+            # print(f_image)
             I = (np.array(f_image.cpu().detach())).flatten().argsort()[::-1]
             label_before = I[0]  # the label before
-            if data is None:
-                print("!!!!!!!")
-                print(data)
-                continue
+            # if data is None:
+            #     print("!!!!!!!")
+            #     print(data)
+            #     continue
             pert_label, isEqual, changedImage = self.deepfool(data)
             changedImage = changedImage.to(self.device)
             f_image = model(changedImage.cuda())
