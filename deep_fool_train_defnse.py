@@ -19,7 +19,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     train_loss_attack = []
     train_loss_attacked = []
     val_loss = []
-    deep_fool.DeepFoolAttack(model=model, device=device)
+    attack_model = deep_fool.DeepFoolAttack(model=model, device=device)
     best_loss = 100
     count = 0
     temp_patience = patience
@@ -45,7 +45,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
             # calculate loss
             error = loss_function(y_hat, label)
             error.backward()
-            attacked_data = deep_fool.return_noisy_batch(data)
+            attacked_data = attack_model.return_noisy_batch(data)
             train_losses.append(error.data.item())
             # backprop
             optimizer.step()
