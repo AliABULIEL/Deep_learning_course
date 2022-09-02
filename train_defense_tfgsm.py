@@ -39,10 +39,10 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
             # flatten the image to vector of size 28*28
             # data = data.view(-1, n_features)
             # calculate output
-            data.requires_grad = True
             y_hat = model(data)
             # calculate loss
             error = loss_function(y_hat, label)
+            data.requires_grad = True
             error.backward()
             attacked_data = tfgsm.perturb_image(data, 0.5, data.grad)
             train_losses.append(error.data.item())
