@@ -19,6 +19,12 @@ to run the peoject:
                 
                 -d means try deep fool atttack 
                 
+                -s run Deep fool adversial attack
+                
+                -p run defense for Deep fool adversial attack 
+                
+                -n encoder decoder defnse for Deep fool
+                
                 -h shows hints for flags 
                 
                 you have to train the model before test and TFGSM attack*
