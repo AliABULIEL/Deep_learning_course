@@ -12,7 +12,6 @@ class DeepFoolAttack:
         self.overshoot = overshoot
         self.max_iter = max_iter
         self.device = device
-
     def deepfool(self, image):
         f_image = self.model(image)
         I = []
@@ -76,7 +75,6 @@ class DeepFoolAttack:
         # print(image.shape)
         r_tot = (1 + self.overshoot) * r_tot
         return newLabel, (newLabel == label), image
-
     def evaluate_attack(self,  test_dataloader, model):
         print("run")
         # print(len(self.test_dataloader))
@@ -105,9 +103,6 @@ class DeepFoolAttack:
 
         print("Attack Success Rate = {} / {} = {}".format(success_attacks,
                                                                        len(test_dataloader), success_attacks/len(test_dataloader)))
-
-
-
     def image_deepfool(self, image):
         f_image = self.model(image)
         I = (np.array(f_image.cpu().detach())).flatten().argsort()[::-1]
@@ -165,7 +160,6 @@ class DeepFoolAttack:
         r_tot = (1 + self.overshoot) * r_tot
 
         return newLabel
-
     def return_noisy_batch(self, data):
             data = data.to(self.device)
             data = Variable(data.view(-1, 1, 28, 28))
@@ -173,7 +167,6 @@ class DeepFoolAttack:
             # shape = data.shape
             newLabel, isChanged, noisy_img = self.deepfool(data)
             return noisy_img
-
     def run(self, test_loader):
         # print(len(self.test_dataloader))
         success_attacks = 0
