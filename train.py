@@ -62,7 +62,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
             # print("patience 1 is " + str(patience))
             if(current_loss< best_loss):
                     # print("patience reset")
-                    best_loss = np.average(val_lossess)
+                    best_loss = current_loss
                     torch.save(model.state_dict(), F"/content/gdrive/My Drive/best_model.pt")
                     temp_patience = 5
                     best_model = model
