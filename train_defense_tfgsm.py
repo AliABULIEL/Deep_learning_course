@@ -84,11 +84,11 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
                 # backprop
                 val_lossess.append(error.detach().cpu().numpy())
             current_loss = np.mean(val_lossess)
-            print(" temp patience is "+ str(temp_patience))
-            print(" current loss is "+ str(current_loss))
-            print(" best loss is " + str(best_loss))
+            # print(" temp patience is "+ str(temp_patience))
+            # print(" current loss is "+ str(current_loss))
+            # print(" best loss is " + str(best_loss))
             if (current_loss < best_loss):
-                print("patience reset")
+                # print("patience reset")
                 torch.save(model.state_dict(), F"/content/gdrive/My Drive/best_model.pt")
                 temp_patience = patience
                 best_model = model
@@ -96,7 +96,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
             elif (current_loss >= best_loss):
 
                 temp_patience -= 1
-                print("patince decrease " + str(temp_patience))
+                # print("patince decrease " + str(temp_patience))
 
             if (temp_patience == 0):
                 print("early stopping")
@@ -144,7 +144,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     # x = iterations[-1]
     # x += 1
     # iterations.append(x)
-    plt.plot(iterations[:-1], train_loss)
+    plt.plot(iterations, train_loss)
     plt.xlabel("No. of Iteration")
     plt.ylabel(" Train loss")
     plt.title("Iterations vs Loss function")
