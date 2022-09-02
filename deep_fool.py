@@ -15,7 +15,7 @@ class DeepFoolAttack:
         self.max_iter = max_iter
         self.device = device
 
-    def deepfool(self, image):
+    def image_deepfool(self, image):
         f_image = self.model(image)
         I = (np.array(f_image.cpu().detach())).flatten().argsort()[::-1]
         label = I[0]
@@ -73,13 +73,13 @@ class DeepFoolAttack:
 
         return newLabel
 
-    def run(self):
+    def run(self,test_loader):
         # print(len(self.test_dataloader))
         success_attacks = 0
-        for data, label in self.test_dataloader:
+        for data, label in test_loader:
             # send dat to device
             data, label = data.to(self.device), label.to(self.device)
-            pert_label = self.deepfool(data)
+            pert_label = self.image_deepfool(data)
             if (pert_label.item() != label.item()):
                 success_attacks += 1
         print("Attack Success Rate = {} ".format(success_attacks))
