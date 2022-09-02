@@ -63,6 +63,7 @@ if args.encoder:
     encoder = encoder_decoder.ConvAutoencoder()
     encoder_model = encoder_decoder.Fashion_MNIST_CNN(encoder)
     encoder_model.to(device)
+    print(" model is  {}".format(encoder_model))
     encoder_model = train.train_model(model=encoder_model, train_loader=train_loader, validation_loader=val_loader, epochs=20, learning_rate=0.001, optimizer=torch.optim.Adam(fashion_model.parameters(), lr=0.001), loss_function=nn.CrossEntropyLoss(), device=device, patience=5)
     attack = deep_fool.DeepFoolAttack(model=encoder_model, device=device,max_iter=4)
     attack.evaluate_attack(test_dataloader=test_loader, model=encoder_model)
