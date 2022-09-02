@@ -116,25 +116,24 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     # logging.info("Validation accuracy : {}".format(val_acc))
     print("train accuracy : {}".format(train_acc))
     print("Validation accuracy : {}".format(val_acc))
-    print("train accuracy : {}".format(train_acc))
-    print("Validation accuracy : {}".format(val_acc))
 
 
-    plt.plot(iterations, validate_accuracy)
+
+    plt.plot(iterations[:-1], validate_accuracy)
     plt.xlabel("No. of Iteration")
     plt.ylabel(" Valdiation Accuracy")
     plt.title("Iterations vs Accuracy")
     plt.axvline(x=iterations[-1] - patience + 1, color='b', ls='--')
 
     plt.show()
-    plt.plot(iterations, val_loss)
+    plt.plot(iterations[:-1], val_loss)
     plt.xlabel("No. of Iteration")
     plt.ylabel(" Valdiation loss")
     plt.title("Iterations vs Loss function")
     plt.axvline(x=iterations[-1] - patience + 1, color='b', ls='--')
     plt.show()
 
-    plt.plot(iterations, train_loss_attack)
+    plt.plot(iterations[:-1], train_loss_attack)
     plt.xlabel("No. of Iteration")
     plt.ylabel(" Train loss after attack and defense")
     plt.title("Iterations vs Loss function")
@@ -144,7 +143,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     # x = iterations[-1]
     # x += 1
     # iterations.append(x)
-    plt.plot(iterations, train_loss)
+    plt.plot(iterations[:-1], train_loss)
     plt.xlabel("No. of Iteration")
     plt.ylabel(" Train loss")
     plt.title("Iterations vs Loss function")
