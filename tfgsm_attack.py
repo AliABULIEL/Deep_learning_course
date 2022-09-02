@@ -17,14 +17,14 @@ class FGSMAttack():
         x_prime = torch.clamp(x_prime, 0, 1)
         return x_prime
 
-    def run(self):
+    def run(self,loader):
         # run the attack for each epsilon
         self.model.to(self.device)
         for epsReal in self.epsilons:
             self.adv_examples[epsReal] = []  # store some adv samples for visualization
             eps = epsReal - 1e-7  # small constant to offset floating-point errors
             successful_attacks = 0
-            for data, label in self.test_dataloader:
+            for data, label in loader:
                 # send dat to device
                 data, label = data.to(self.device), label.to(self.device)
 
