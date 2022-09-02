@@ -11,7 +11,7 @@ parser.add_argument("-e", "--test", nargs='?', help="test NN for FashionMinst da
 parser.add_argument("-f", "--TFGSM", nargs='?',  help="run TFGSM adversial attack", const=True)
 parser.add_argument("-d", "--DEEPFOOL", nargs='?',  help="run Deep fool adversial attack", const=True)
 parser.add_argument("-s", "--defense_tfgsm", nargs='?',  help="run Deep fool adversial attack", const=True)
-parser.add_argument("-s", "--defense_deepfool", nargs='?',  help="run Deep fool adversial attack", const=True)
+parser.add_argument("-u", "--defense_deepfool", nargs='?',  help="run Deep fool adversial attack", const=True)
 
 
 
