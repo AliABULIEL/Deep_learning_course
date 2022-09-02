@@ -24,6 +24,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     count = 0
     temp_patience = patience
     best_model = None
+    model.to(device)
 
     for i in range(epochs):
         correct = 0
