@@ -85,7 +85,7 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
                 # backprop
                 val_lossess.append(error.detach().cpu().numpy())
             current_loss = np.mean(val_lossess)
-            print(" temp patience is "+ temp_patience)
+            print(" temp patience is "+ str(temp_patience))
             if (current_loss < best_loss):
                 print("patience reset")
                 best_loss = np.average(val_lossess)
