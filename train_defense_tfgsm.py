@@ -86,7 +86,6 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
                 val_lossess.append(error.detach().cpu().numpy())
             current_loss = np.mean(val_lossess)
             print(" temp patience is "+ temp_patience)
-
             if (current_loss < best_loss):
                 print("patience reset")
                 best_loss = np.average(val_lossess)
@@ -94,8 +93,9 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
                 temp_patience = patience
                 best_model = model
             elif (current_loss >= best_loss):
-                print("patince decrease " + str(temp_patience))
+
                 temp_patience -= 1
+                print("patince decrease " + str(temp_patience))
 
             if (temp_patience == 0):
                 print("early stopping")
