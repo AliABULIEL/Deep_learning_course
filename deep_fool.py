@@ -13,6 +13,7 @@ class DeepFoolAttack:
         self.max_iter = max_iter
         self.device = device
     def deepfool(self, image):
+        print(image)
         f_image = self.model(image)
         I = []
         for j in range(f_image.size(0)):
