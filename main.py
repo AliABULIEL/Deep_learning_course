@@ -25,7 +25,7 @@ args = parser.parse_args()
 trained_model = None
 train_loader, val_loader, test_loader = data_set.load_dataset()
 fashion_model = model.Fashion_MNIST_CNN()
-torch.save(fashion_model.state_dict(), "models")
+torch.save(fashion_model.state_dict(), "models/model.pth")
 device = torch.device('cpu')
 if torch.cuda.is_available():
     device = torch.device('cuda')
