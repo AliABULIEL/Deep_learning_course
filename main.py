@@ -1,6 +1,6 @@
 import argparse
 
-from matplotlib.pyplot import imshow
+import matplotlib.pyplot as plt
 
 import data_set
 import model
@@ -33,7 +33,7 @@ X, Y = next(iter(test_loader))
 
 if args.train:
     import train
-    trained_model = train.train_model(model=fashion_model, train_loader=train_loader, validation_loader=val_loader, epochs=20, learning_rate=0.001, optimizer=torch.optim.Adam(fashion_model.parameters(), lr=0.001), loss_function=nn.CrossEntropyLoss(), device=device, patience=5)
+    trained_model = train.train_model(model=fashion_model, train_loader=train_loader, validation_loader=val_loader, epochs=2, learning_rate=0.001, optimizer=torch.optim.Adam(fashion_model.parameters(), lr=0.001), loss_function=nn.CrossEntropyLoss(), device=device, patience=5)
 if args.test:
     import test
     test.test_model(model=trained_model, test_loader=test_loader, epochs=1, loss_function=nn.CrossEntropyLoss(), device=device)
