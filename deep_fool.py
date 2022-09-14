@@ -1,6 +1,7 @@
 import torch
 import numpy as np
 import copy
+import matplotlib.pyplot as plt
 
 from torch.autograd import Variable
 
@@ -72,6 +73,8 @@ class DeepFoolAttack:
                 loopNumber += 1
             I = temp2I
             image[j] = imageToChange.view(1, 1, 28, 28)
+            show = plt.imshow(image[j][0][0].detach().cpu().numpy())
+            plt.show()
 
         # print(image.shape)
         r_tot = (1 + self.overshoot) * r_tot
