@@ -98,35 +98,35 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
     # print(len(val_loss))
     print("train accuracy : {}".format(train_accuracy[-patience]))
     print("Validation accuracy : {}".format(validate_accuracy[-patience]))
-    plt.plot(iterations, train_accuracy)
-    plt.xlabel("No. of Iteration")
-    plt.ylabel(" Train Accuracy")
-    plt.title("Iterations vs Accuracy")
-    plt.axvline(x=iterations[-1]-patience+1, color='b', ls='--')
-    plt.show()
-
-    plt.plot(iterations, validate_accuracy)
-    plt.xlabel("No. of Iteration")
-    plt.ylabel(" Valdiation Accuracy")
-    plt.title("Iterations vs Accuracy")
-    plt.axvline(x=iterations[-1]-patience+1, color='b', ls='--')
-
-    plt.show()
-    plt.plot(iterations, val_loss)
-    plt.xlabel("No. of Iteration")
-    plt.ylabel(" Valdiation loss")
-    plt.title("Iterations vs Loss function")
-    plt.axvline(x=iterations[-1] - patience+1, color='b', ls='--')
-    plt.show()
-
-    x = iterations[-1]
-    x += 1
-    iterations.append(x)
-    plt.plot(iterations, train_loss)
-    plt.xlabel("No. of Iteration")
-    plt.ylabel(" Train loss")
-    plt.title("Iterations vs Loss function")
-    plt.axvline(x=iterations[-1]-patience+1, color='b', ls='--')
-    plt.show()
+    # plt.plot(iterations, train_accuracy)
+    # plt.xlabel("No. of Iteration")
+    # plt.ylabel(" Train Accuracy")
+    # plt.title("Iterations vs Accuracy")
+    # plt.axvline(x=iterations[-1]-patience+1, color='b', ls='--')
+    # plt.show()
+    #
+    # plt.plot(iterations, validate_accuracy)
+    # plt.xlabel("No. of Iteration")
+    # plt.ylabel(" Valdiation Accuracy")
+    # plt.title("Iterations vs Accuracy")
+    # plt.axvline(x=iterations[-1]-patience+1, color='b', ls='--')
+    #
+    # plt.show()
+    # plt.plot(iterations, val_loss)
+    # plt.xlabel("No. of Iteration")
+    # plt.ylabel(" Valdiation loss")
+    # plt.title("Iterations vs Loss function")
+    # plt.axvline(x=iterations[-1] - patience+1, color='b', ls='--')
+    # plt.show()
+    #
+    # x = iterations[-1]
+    # x += 1
+    # iterations.append(x)
+    # plt.plot(iterations, train_loss)
+    # plt.xlabel("No. of Iteration")
+    # plt.ylabel(" Train loss")
+    # plt.title("Iterations vs Loss function")
+    # plt.axvline(x=iterations[-1]-patience+1, color='b', ls='--')
+    # plt.show()
     return best_model
 
