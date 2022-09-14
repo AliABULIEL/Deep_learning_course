@@ -27,8 +27,8 @@ def train_model(model, train_loader, validation_loader, epochs, learning_rate, o
         for j, (data, label) in enumerate(train_loader):
             data, label = data.to(device), label.to(device)
             data = Variable(data.view(100, 1, 28, 28))
-            show = plt.imshow(data[0][0].detach().cpu().numpy())
-            plt.show()
+            # show = plt.imshow(data[0][0].detach().cpu().numpy())
+            # plt.show()
             label = Variable(label)
             optimizer.zero_grad()
             # flatten the image to vector of size 28*28
