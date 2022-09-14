@@ -167,7 +167,7 @@ class DeepFoolAttack:
             loopNumber += 1
 
         r_tot = (1 + self.overshoot) * r_tot
-        show = plt.imshow(imageToChange.detach().cpu().numpy())
+        show = plt.imshow(imageToChange[0][0].detach().cpu().numpy())
         plt.show()
         return newLabel
     def return_noisy_batch(self, data):
