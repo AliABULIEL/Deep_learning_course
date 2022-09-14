@@ -1,6 +1,6 @@
 import torch
 from torch import nn
-import matplotlib as plt
+import matplotlib.pyplot as plt
 
 
 class FGSMAttack():
