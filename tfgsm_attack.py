@@ -16,7 +16,7 @@ class FGSMAttack():
         x_prime = x - eps * grad.sign()
         # keep image data in the [0,1] range
         x_prime = torch.clamp(x_prime, 0, 1)
-        show = plt.imshow(x_prime.cpu().numpy())
+        show = plt.imshow(x_prime.detahc().cpu().numpy())
         plt.show()
         return x_prime
 
