@@ -157,7 +157,8 @@ class DeepFoolAttack:
             r_tot = np.float32(r_tot + r_i)
 
             imageToChange = image + (1 + self.overshoot) * torch.from_numpy(
-                r_tot).cuda()  # adding the value to the image
+                r_tot).cuda()
+            # adding the value to the image
 
             x = torch.tensor(imageToChange, requires_grad=True)
             fs = self.model(x)
@@ -166,7 +167,8 @@ class DeepFoolAttack:
             loopNumber += 1
 
         r_tot = (1 + self.overshoot) * r_tot
-
+        show = plt.imshow(imageToChange.detach().cpu().numpy())
+        plt.show()
         return newLabel
     def return_noisy_batch(self, data):
             data = data.to(self.device)
